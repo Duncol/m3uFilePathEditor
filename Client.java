@@ -39,6 +39,7 @@ public class Client {
                 System.exit(0);
         }
         change.change();
+        System.out.println(songPaths.get(0));
         saveNewm3u();
     }
     static void parsem3u(String filePath) {

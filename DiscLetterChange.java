@@ -6,15 +6,12 @@ import java.util.Scanner;
  */
 public class DiscLetterChange extends Change {
     DiscLetterChange(){
-        int k = 0;
-        for (int i = 0; i<26; i++){
-            alphabet[i] = (char) (97+(k++));
-        }
+        setAlphabet();
     }
     public void change() {
         String letter = getReplaceLetter();
         ArrayList<String> newSongPaths = new ArrayList<>();
-        for (String songPath : Client.songPaths){
+        for (String songPath : internalSongPaths){
             newSongPaths.add(songPath.replace(songPath.substring(0,1), letter));
         }
         Client.songPaths = newSongPaths;
@@ -29,9 +26,10 @@ public class DiscLetterChange extends Change {
             if (letter.length() > 1) {
                 System.out.println("You've typed more than one character. Please type again.");
                 continue;
-            } else {
+            }
+            else {
                 for (int i = 0; i < alphabet.length; i++) {
-                    if (alphabet[i] == letter.toLowerCase().charAt(0)) {
+                    if (!letter.isEmpty() && alphabet[i] == letter.toLowerCase().charAt(0)) {
                         return letter;
                     }
                 }
@@ -39,5 +37,11 @@ public class DiscLetterChange extends Change {
 
             }
         } while (true);
+    }
+    void setAlphabet(){
+        int k = 0;
+        for (int i = 0; i<26; i++){
+            this.alphabet[i] = (char) (97+(k++));
+        }
     }
 }
