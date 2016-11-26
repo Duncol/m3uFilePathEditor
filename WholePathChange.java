@@ -18,9 +18,9 @@ public class WholePathChange extends Change{
     }
     public String getReplacePath(String shortestCommon){
         Scanner scan = new Scanner(System.in);
-        System.out.println("The current shortest common part of filepath is:\n" + shortestCommon +
-                "\nIt will replace this part only, since the rest is singular for specific song/album/band");
-        System.out.print("Please specify new common part of path (starting with disc letter): ");
+        System.out.print("The current shortest common part of filepath is:\n'" + shortestCommon +
+                "'\n\nIt will replace this part only, since the rest is singular for specific song/album/band" +
+                "\n\nPlease specify new common part of path (starting with disc letter): ");
         String path = "";
         while (path.isEmpty()){
             path = scan.nextLine();

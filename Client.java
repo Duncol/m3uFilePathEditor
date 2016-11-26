@@ -13,8 +13,8 @@ public class Client {
     }
     static void run(){
         Scanner input = new Scanner(System.in);
-        System.out.print("Welcome to a simple program, \n" +
-                "that will assist you with renaming a whole bunch of records in a m3u file. \n\n" +
+        System.out.print("%%%%%%%%%%%%%%%%%%%%\nWelcome to a simple program, \n" +
+                "that will assist you with renaming a whole bunch of records in a m3u file. \n%%%%%%%%%%%%%%%%%%%%\n\n" +
                 "Please specify filename (make sure it is in program folder!): ");
         String answer = input.nextLine();
         if (!answer.contains(".m3u")){answer = answer + ".m3u";}
@@ -22,7 +22,7 @@ public class Client {
         answer = "";
         while(!(answer.equals("1") || answer.equals("2") || answer.equals("3"))) {
             System.out.println(
-                    "Please select something:\n" +
+                    "\nPlease select something:\n" +
                             "\t1 - Change entire path\n" +
                             "\t2 - Change disc letter only\n" +
                             "\t3 - Quit");
@@ -39,7 +39,6 @@ public class Client {
                 System.exit(0);
         }
         change.change();
-        System.out.println(songPaths.get(0));
         saveNewm3u();
     }
     static void parsem3u(String filePath) {
