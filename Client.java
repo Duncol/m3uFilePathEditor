@@ -1,3 +1,5 @@
+
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -58,12 +60,15 @@ public class Client {
                 System.out.println("The file does not exist. Do you want to change m3u filepath? (y/n)");
                 answer = scan.next().charAt(0);
                 if (answer == 'y') {
-                    System.out.print("Please type filepath: ");
+                    System.out.print("Please type filepath: (to quit program type 'q')");
                     Scanner scan2 = new Scanner(System.in);
-                    parsem3u(scan.nextLine());
+                    String path = scan2.nextLine();
+                    if (path.equals("q")){ System.exit(0);}
+                    parsem3u(path);
                     scan2.close();
                 } else if (answer == 'n') {
                     run();
+                    scan.close();
                 } else {
                     System.out.println("Error: invalid answer");
                 }
@@ -73,7 +78,7 @@ public class Client {
     }
     static void saveNewm3u(){
         try {
-            PrintWriter out = new PrintWriter(new FileWriter("newPlaylist.txt"));
+            PrintWriter out = new PrintWriter(new FileWriter("newPlaylist.m3u"));
             for (String path : songPaths){
                 out.println(path);
             }
