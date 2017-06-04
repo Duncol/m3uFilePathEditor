@@ -34,7 +34,7 @@ public class Client {
                 break;
             case "3":
                 System.exit(0);
-            default: throw new InvalidChoiceException();
+            default: throw new InvalidChoiceException("Invalid choice");
         }
         change.change();
         saveNewm3u();
@@ -66,7 +66,7 @@ public class Client {
                     run();
                     scan.close();
                 } else {
-                    System.out.println("Error: invalid answer");
+                    throw new InvalidChoiceException("Error: invalid answer");
                 }
 
             }
