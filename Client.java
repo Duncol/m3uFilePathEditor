@@ -1,12 +1,7 @@
-
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- * Created by Lenovo on 2016-11-25.
- */
 public class Client {
     static Change change;
     static ArrayList<String> songPaths;
@@ -39,6 +34,7 @@ public class Client {
                 break;
             case "3":
                 System.exit(0);
+            default: throw new InvalidChoiceException();
         }
         change.change();
         saveNewm3u();
