@@ -1,45 +1,34 @@
-package com.duncol.utility;
+package com.duncol.utility.changers;
 
 import java.util.ArrayList;
 
-public class WholePathChange implements PathChanger{
-	private FileUtils fu;
-	private FilePathInput fpi;
-	
-	WholePathChange(FileUtils fu, FilePathInput fpi) {
-		this.fu = fu;
-		this.fpi = fpi;
+import com.duncol.utility.input.ConsoleGeneralInputReader;
+
+public class WholePathChange extends PathChanger{
+
+    public WholePathChange(Builder builder) {
+    	super(builder.fileUtils, builder.fileInputReader);
 	}
 	
 	@Override
-    public void run() {
-		// Do metody szablonowej
-		String filePath;
-		ArrayList<String> songPaths;
-		do {
-			filePath = fpi.read();
-			songPaths = fu.loadM3u(filePath);
-		} while (songPaths.isEmpty());
-			
-    	ArrayList<String> newSongPaths = new ArrayList<String>();
+	ArrayList<String> parse(ArrayList<String> songPaths) {
+		ArrayList<String> newSongPaths = new ArrayList<String>();
         String shortestCommon = shortestCommon(songPaths);
         String newCommonPath = getReplacePathFor(shortestCommon);
         for (String line : songPaths){
             newSongPaths.add(newCommonPath + line.substring(shortestCommon.length()));
         }
-        fu.saveM3u(newSongPaths, filePath);
-    }
-    
+        return newSongPaths;
+	}
+	
     public String getReplacePathFor(String shortestCommon) {
         String path;
         System.out.print("The current shortest common part of filepath is:\n'" + shortestCommon +
                 "'\n\nIt will replace this part only, since the rest is singular for specific song/album/band" +
                 "\n\nPlease specify new common part of path (starting with disc letter): ");
-
         do {
-        	path = InputUtils.next();
+        	path = ConsoleGeneralInputReader.read();
         } while (!path.matches("[A-Za-z]:(\\\\\\w+)+\\\\?"));
-          
         return path.endsWith("\\") ? path : path.concat("\\");
     }
     
@@ -56,10 +45,23 @@ public class WholePathChange implements PathChanger{
             }
         }
         String common = songPaths.get(0).substring(0, count);
-        // Cuts the unnecessary remains after last backslash
-        while (!common.endsWith("\\")){
-            common = common.substring(0, common.length()-1);
+        return cutRemains(common);
+    }
+    
+    private String cutRemains(String commonRaw) {
+    	while (!commonRaw.endsWith("\\")){
+    		commonRaw = commonRaw.substring(0, commonRaw.length()-1);
         }
-        return common;
+        return commonRaw;
+    }
+    
+    public static class Builder extends PathChanger.Builder<Builder> {
+    	public Builder getThis() {
+    		return this;
+    	}
+    	
+    	public PathChanger build() {
+    		return new WholePathChange(this);
+    	}
     }
 }
